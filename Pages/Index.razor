@@ -1,0 +1,30 @@
+﻿@page "/"
+
+@using Syncfusion.Blazor.Spinner
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Buttons
+@inject IJSRuntime jsRuntime
+<h1>Spinners</h1>
+
+<div aria-modal="true" role="dialog" tabindex="-1">
+    <SfSpinner  @ref=_spinner @bind-Visible=@_showSpinner Label="Loading" CssClass="e-spin-overlay" ZIndex=1000 />
+
+    <SfButton @onclick=@click>Show spinner</SfButton>
+    <SfTextBox @bind-Value=@_textInput />
+    <p>You input is : @_textInput</p>
+</div>
+
+@code
+{
+    SfSpinner _spinner;
+    private bool _showSpinner = false;
+    private string _textInput = string.Empty;
+
+    private async void click()
+    {
+        _showSpinner = true;
+        await jsRuntime.InvokeAsync<object>("accessDOMElement");
+
+
+    }
+}
