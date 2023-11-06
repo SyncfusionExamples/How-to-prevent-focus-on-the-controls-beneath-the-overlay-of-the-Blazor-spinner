@@ -1,56 +1,18 @@
 ﻿@page "/counter"
 
-@using Syncfusion.Blazor.Popups
-@using Syncfusion.Blazor.Spinner
-@using Syncfusion.Blazor.Inputs
-@using Syncfusion.Blazor.Buttons
-@inject IJSRuntime jsRuntime
+<PageTitle>Counter</PageTitle>
 
-<h1>Dialogs</h1>
+<h1>Counter</h1>
 
-<SfButton @onclick=@ShowSimpleModal>Open Modal Dialog</SfButton>
+<p role="status">Current count: @currentCount</p>
 
-<SfDialog Width="250px" IsModal=true ShowCloseIcon=true @bind-Visible=@_simpleModalVisible>
-    <DialogEvents OnOverlayClick=@(() => _simpleModalVisible = false) Opened="@onOpen" />
-    <DialogTemplates>
-        <Header>A simple modal dialog</Header>
-        <Content>
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
-            <SfSpinner @bind-Visible=@_isBusy Label="Loading" CssClass="e-spin-overlay" ZIndex=1000 />
+@code {
+    private int currentCount = 0;
 
-            <p>This is a Dialog with content </p>
-            <SfTextBox @bind-Value=@_textInput  Enabled="@enable"/>
-            <p>You input is : @_textInput</p>
-
-        </Content>
-    </DialogTemplates>
-</SfDialog>
-
-@code
-{
-    private bool enable = true;
-    private bool _simpleModalVisible = false;
-
-    private string _textInput = "hello";
-
-    private bool _isBusy = false;
-
-    private async void ShowSimpleModal()
+    private void IncrementCount()
     {
-        await jsRuntime.InvokeAsync<object>("accessDOMElement");
-        _isBusy = true;
-        _simpleModalVisible = true;
-
-    }
-    public void onOpen()
-    {
-        if(_isBusy == true)
-        {
-            enable = false;
-        }
-        else
-        {
-            enable = true;
-        }
+        currentCount++;
     }
 }
